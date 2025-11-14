@@ -5,6 +5,6 @@ namespace _Project.Code.UI
 {
     public class MoneyWidget : CurrencyWidget
     {
-        public override ReactiveProperty<int> Currency => PersistentService.Persistent.Progress.Money;
+        public override ReactiveProperty<int> Currency => PersistentService.Data.Progress.Money;
     }
 }

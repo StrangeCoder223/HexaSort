@@ -7,7 +7,7 @@ namespace _Project.Code.UI
 {
     public class LifeWidget : CurrencyWidget
     {
-        public override ReactiveProperty<int> Currency => PersistentService.Persistent.Progress.Life;
+        public override ReactiveProperty<int> Currency => PersistentService.Data.Progress.Life;
 
         [SerializeField] private TextMeshProUGUI _timerText;
         
@@ -15,7 +15,7 @@ namespace _Project.Code.UI
         {
             base.Awake();
             
-            PersistentService.Persistent.Progress.LifeRestoreTime.Subscribe(x =>
+            PersistentService.Data.Progress.LifeRestoreTime.Subscribe(x =>
             {
                 _timerText.text = TimeSpan.FromSeconds(x).ToString(@"mm\:ss");
             }).AddTo(this);

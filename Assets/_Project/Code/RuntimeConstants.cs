@@ -5,6 +5,7 @@ namespace _Project.Code
         public static class AssetLabels
         { 
             public const string GameConfig = "Configs/GameConfig";
+            public const string GoalWidget = "Prefabs/UI/GoalWidget";
         }
 
         public static class Scenes

@@ -21,7 +21,7 @@ namespace _Project.Code.Gameplay
         public void Generate(int level)
         {
             LevelConfig levelConfig = _configService.ForLevel(level - 1);
-            SessionData sessionData = _persistent.Persistent.Progress.SessionData;
+            SessionData sessionData = _persistent.Data.Progress.SessionData;
 
             _factory.CreateCell();  
         }

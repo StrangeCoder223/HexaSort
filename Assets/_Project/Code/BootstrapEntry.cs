@@ -39,9 +39,9 @@ namespace _Project.Code
             PersistentData savedData = _saveLoadService.Load();
 
             if (savedData == null) 
-                _persistentService.Persistent = _persistentService.CreateDefaultPersistent();
+                _persistentService.Data = _persistentService.CreateDefaultData();
             else
-                _persistentService.Persistent = savedData;
+                _persistentService.Data = savedData;
         }
     }
 }

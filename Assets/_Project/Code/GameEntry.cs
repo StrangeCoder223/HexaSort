@@ -33,7 +33,7 @@ namespace _Project.Code
 
         private void InitializeGameplay()
         {
-            _levelGenerator.Generate(_persistent.Persistent.Progress.Level);
+            _levelGenerator.Generate(_persistent.Data.Progress.Level);
         }
 
         private void InitializeUI()

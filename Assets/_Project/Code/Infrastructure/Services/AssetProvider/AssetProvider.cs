@@ -1,12 +1,17 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _Project.Code.Infrastructure.Services.AssetProvider
 {
     public class AssetProvider : IAssetProvider
     {
-        public T LoadAsset<T>(string path) where T : Object
+        public async UniTask<T> LoadAsset<T>(string path) where T : Object
         {
-            return Resources.Load<T>(path);
+            var resourceRequest = Resources.LoadAsync<T>(path).ToUniTask();
+
+            Object result = await resourceRequest;
+
+            return result as T;
         }
     }
 }

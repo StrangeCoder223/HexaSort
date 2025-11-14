@@ -18,20 +18,20 @@ namespace _Project.Code.Infrastructure.Services.SaveLoadService
         
         public void Save()
         {
-            string json = JsonConvert.SerializeObject(_persistentService.Persistent, Formatting.Indented, 
+            string json = JsonConvert.SerializeObject(_persistentService.Data, Formatting.Indented, 
                 new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
             
             PlayerPrefs.SetString(PersistentKey, json);
         }
 
-        public PersistentData Load()
+        public Data.PersistentData Load()
         {
             string json = PlayerPrefs.GetString(PersistentKey);
 
             if (string.IsNullOrEmpty(json))
                 return null;
 
-            return JsonConvert.DeserializeObject<PersistentData>(json);
+            return JsonConvert.DeserializeObject<Data.PersistentData>(json);
         }
     }
 }

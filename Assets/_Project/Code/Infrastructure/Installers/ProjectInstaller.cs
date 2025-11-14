@@ -1,4 +1,5 @@
 using _Project.Code.Infrastructure.Configs;
+using _Project.Code.Infrastructure.Factories;
 using _Project.Code.Infrastructure.Services.AssetProvider;
 using _Project.Code.Infrastructure.Services.ConfigService;
 using _Project.Code.Infrastructure.Services.PersistentService;
@@ -19,7 +20,9 @@ namespace _Project.Code.Infrastructure.Installers
         private ISaveLoadService _saveLoadService;
         private IAssetProvider _assetProvider;
         private ISceneLoader _sceneLoader;
-    
+        private UIFactory _uiFactory;
+        private GameFactory _gameFactory;
+        
         public void InstallBindings(ContainerBuilder builder)
         {
             _assetProvider = new AssetProvider();
@@ -27,12 +30,16 @@ namespace _Project.Code.Infrastructure.Installers
             _persistentService = new PersistentService(_configService);
             _saveLoadService = new SaveLoadService(_persistentService);
             _sceneLoader = CreateSceneLoader();
-            
+
+            _uiFactory = new(_assetProvider);
+            _gameFactory = new(_assetProvider);
             
             builder.AddSingleton(_configService, typeof(IConfigService));
             builder.AddSingleton(_persistentService, typeof(IPersistentService));
             builder.AddSingleton(_saveLoadService, typeof(ISaveLoadService));
             builder.AddSingleton(_sceneLoader, typeof(ISceneLoader));
+            builder.AddSingleton(_uiFactory, typeof(UIFactory));
+            builder.AddSingleton(_gameFactory, typeof(GameFactory));
         }
 
         private ISceneLoader CreateSceneLoader()

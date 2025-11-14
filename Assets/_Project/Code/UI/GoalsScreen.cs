@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using _Project.Code.Infrastructure.Data;
+using _Project.Code.Infrastructure.Factories;
 using _Project.Code.Infrastructure.Services.PersistentService;
 using Reflex.Attributes;
 using UnityEngine;
@@ -9,36 +12,36 @@ namespace _Project.Code.UI
         [SerializeField] private RectTransform _goalsContainer;
         private GameObject _prefab;
         private IPersistentService _persistentService;
+        private List<GoalWidget> _goalWidgets;
+        private UIFactory _uiFactory;
 
         [Inject]
-        private void Construct(IPersistentService persistent)
+        private void Construct(IPersistentService persistent, UIFactory uiFactory)
         {
             _persistentService = persistent;
+            _uiFactory = uiFactory;
         }
 
-        public override void Show()
+        public override async void Show()
         {
             base.Show();
 
-            GoalWidget goal = Instantiate(_prefab, _goalsContainer).GetComponent<GoalWidget>();
-            goal.Initialize();
+            _goalWidgets = new List<GoalWidget>();
+            List<GoalData> goals = _persistentService.Data.Progress.SessionData.Goals;
+
+            for (int i = 0; i < goals.Count; i++)
+            {
+                GoalWidget goalWidget = await _uiFactory.CreateGoalWidget(goals[i], _goalsContainer);
+                _goalWidgets.Add(goalWidget);
+            }
+        }
+
+        public override void Hide()
+        {
+            base.Hide();
             
-        }
-    }
-
-    public class GoalWidget : MonoBehaviour
-    {
-        private IPersistentService _persistent;
-
-        [Inject]
-        private void Construct(IPersistentService persistent)
-        {
-            _persistent = persistent;
-        }
-
-        public void Initialize()
-        {
-            _persistent.Persistent.Progress.SessionData.Goal
+            _goalWidgets.ForEach(x => Destroy(x.gameObject));
+            _goalWidgets.Clear();
         }
     }
 }

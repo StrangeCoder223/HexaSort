@@ -13,9 +13,9 @@ namespace _Project.Code.Infrastructure.Services.ConfigService
             _assetProvider = assetProvider;
         }
         
-        public void Load()
+        public async void Load()
         {
-            _gameConfig = _assetProvider.LoadAsset<GameConfig>(RuntimeConstants.AssetLabels.GameConfig);
+            _gameConfig = await _assetProvider.LoadAsset<GameConfig>(RuntimeConstants.AssetLabels.GameConfig);
         }
 
         public MetaConfig ForMeta()

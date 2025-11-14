@@ -6,17 +6,17 @@ namespace _Project.Code.Infrastructure.Services.PersistentService
 {
     public class PersistentService : IPersistentService
     {
-        public PersistentData Persistent { get; set; }
+        public PersistentData Data { get; set; }
 
         private IConfigService _configService;
         
         public PersistentService(IConfigService configService) => _configService = configService;
         
-        public PersistentData CreateDefaultPersistent()
+        public PersistentData CreateDefaultData()
         {
             MetaConfig metaConfig = _configService.ForMeta();
             
-            PersistentData persistent = new PersistentData()
+            PersistentData data = new PersistentData()
             {
                 Progress = new()
                 {
@@ -28,7 +28,7 @@ namespace _Project.Code.Infrastructure.Services.PersistentService
                 Options = new()
             };
             
-            return persistent;
+            return data;
         }
     }
 }

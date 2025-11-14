@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using _Project.Code.Infrastructure.Configs;
 using UniRx;
+using UnityEngine.Serialization;
 
 namespace _Project.Code.Infrastructure.Data
 {
@@ -18,13 +20,14 @@ namespace _Project.Code.Infrastructure.Data
     [Serializable]
     public class SessionData
     {
-        public GoalData Goal;
+        public List<GoalData> Goals;
     }
 
     [Serializable]
     public class GoalData
     {
         public HexColor TargetColor;
-        public int Amount;
+        public int TargetAmount;
+        public ReactiveProperty<int> CurrentAmount;
     }
 }

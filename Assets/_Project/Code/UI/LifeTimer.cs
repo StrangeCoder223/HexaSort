@@ -20,7 +20,7 @@ namespace _Project.Code.UI
             _configService = configService;
         }
 
-        private void Awake() => _persistent.Persistent.Progress.Life.Subscribe(TryStartTimer).AddTo(this);
+        private void Awake() => _persistent.Data.Progress.Life.Subscribe(TryStartTimer).AddTo(this);
 
         private void OnDestroy() => _timerDisposable?.Dispose();
 
@@ -31,7 +31,7 @@ namespace _Project.Code.UI
             if (lifeAmount >= maxLife)
                 return;
             
-            var lifeRestoreTime = _persistent.Persistent.Progress.LifeRestoreTime;
+            var lifeRestoreTime = _persistent.Data.Progress.LifeRestoreTime;
             
             if (lifeRestoreTime.Value <= 0) 
                 lifeRestoreTime.Value = _configService.ForMeta().LifeRestoreTime;
@@ -45,7 +45,7 @@ namespace _Project.Code.UI
                     if (lifeRestoreTime.Value <= 0)
                     {
                         _timerDisposable?.Dispose();
-                        _persistent.Persistent.Progress.Life.Value++;
+                        _persistent.Data.Progress.Life.Value++;
                     }
                 })
                 .AddTo(_timerDisposable);

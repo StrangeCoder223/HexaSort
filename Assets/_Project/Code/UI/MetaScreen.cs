@@ -25,13 +25,13 @@ namespace _Project.Code.UI
 
         private void Awake()
         {
-            _levelText.text = "Level " + _persistent.Persistent.Progress.Level;
+            _levelText.text = "Level " + _persistent.Data.Progress.Level;
             _playButton.onClick.AddListener(TryPlayLevel);
         }
 
         private async void TryPlayLevel()
         {
-            if (_persistent.Persistent.Progress.Life.Value <= 0)
+            if (_persistent.Data.Progress.Life.Value <= 0)
                 return;
             
             await _sceneLoader.LoadScene(RuntimeConstants.Scenes.Game);
