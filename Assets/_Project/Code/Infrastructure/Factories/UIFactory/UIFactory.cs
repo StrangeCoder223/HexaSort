@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace _Project.Code.Infrastructure.Factories
 {
-    public class UIFactory : ObjectFactory
+    public class UIFactory : ObjectFactory, IUIFactory
     {
         public UIFactory(IAssetProvider assetProvider) : base(assetProvider) { }
 
@@ -18,6 +18,22 @@ namespace _Project.Code.Infrastructure.Factories
             
             return goalWidget;
         }
-        
+
+        public void CreateSettings()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void CreateShop()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
+
+    public interface IUIFactory
+    {
+        UniTask<GoalWidget> CreateGoalWidget(GoalData goalData, RectTransform parent = null);
+        void CreateSettings();
+        void CreateShop();
     }
 }

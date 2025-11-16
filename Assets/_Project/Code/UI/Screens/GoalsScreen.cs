@@ -14,10 +14,10 @@ namespace _Project.Code.UI
         private GameObject _prefab;
         private IPersistentService _persistentService;
         private List<GoalWidget> _goalWidgets;
-        private UIFactory _uiFactory;
+        private IUIFactory _uiFactory;
 
         [Inject]
-        private void Construct(IPersistentService persistent, UIFactory uiFactory)
+        private void Construct(IPersistentService persistent, IUIFactory uiFactory)
         {
             _persistentService = persistent;
             _uiFactory = uiFactory;
