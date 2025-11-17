@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using _Project.Code.Infrastructure.Configs;
 using DG.Tweening;
 using UnityEngine;
@@ -7,10 +8,11 @@ namespace _Project.Code.Gameplay
 {
     public class HexStack : MonoBehaviour
     {
-        public Hex UpperHex => _hexes[^1];
+        public Hex TopHex => _hexes[^1];
+        public int HexCount => _hexes.Count;
         
         private List<Hex> _hexes;
-        private readonly Vector3 _hexStep = Vector3.up * 0.2f;
+        private readonly Vector3 _hexStep = Vector3.up * 0.13f;
 
         public void Construct(List<Hex> hexes)
         {
@@ -41,7 +43,7 @@ namespace _Project.Code.Gameplay
 
         public List<Hex> RemoveUpper()
         {
-            HexColor targetColor = UpperHex.Color;
+            HexColor targetColor = TopHex.Color;
             
             List<Hex> removedHexes = new List<Hex>();
             
@@ -56,6 +58,14 @@ namespace _Project.Code.Gameplay
             _hexes.RemoveRange(_hexes.Count - 1, removedHexes.Count);
 
             return removedHexes;
+        }
+
+        public List<HexColor> GetColors()
+        {
+            List<HexColor> hexColors = new List<HexColor>();
+            _hexes.ForEach(x => hexColors.Add(x.Color));
+
+            return hexColors;
         }
     }
 }

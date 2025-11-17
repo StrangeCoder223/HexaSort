@@ -16,6 +16,13 @@ namespace _Project.Code.Infrastructure.Configs
     [Serializable]
     public class GeneratorConfig
     {
+        public int MaxOffersCount = 3;
+        public int MinStackHeight = 2;
+        public int MaxStackHeight = 6;
+        
+        public float PureStackChance = 0.3f;
+        public float NewColorChance = 0.1f;
+        
         public float HexRadius = 0.5f;
         public float HexWidthMultiplier = 2f;
         public float HorizontalSpacingMultiplier = 0.75f;

@@ -16,5 +16,10 @@ namespace _Project.Code
             public const string Game = "Game";
             public const string Meta = "Meta";
         }
+
+        public static class Layers
+        {
+            public const string Cell = "Cell";
+        }
     }
 }

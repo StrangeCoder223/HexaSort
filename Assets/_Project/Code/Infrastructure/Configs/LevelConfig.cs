@@ -7,7 +7,12 @@ namespace _Project.Code.Infrastructure.Configs
     [Serializable]
     public class ColorStack
     {
-        public List<HexColor> Colors = new List<HexColor>();
+        public List<HexColor> Colors;
+
+        public ColorStack(List<HexColor> colors)
+        {
+            Colors = colors;
+        }
     }
 
     [Serializable]
@@ -21,7 +26,7 @@ namespace _Project.Code.Infrastructure.Configs
         {
             Type = HexCellType.Locked;
             Cost = 0;
-            ColorStack = new ColorStack();
+            ColorStack = new ColorStack(new List<HexColor>());
         }
     }
 
@@ -60,7 +65,7 @@ namespace _Project.Code.Infrastructure.Configs
                 }
                 else if (Cells[i].ColorStack == null)
                 {
-                    Cells[i].ColorStack = new ColorStack();
+                    Cells[i].ColorStack = new ColorStack(new List<HexColor>());
                 }
             }
         }
@@ -120,7 +125,7 @@ namespace _Project.Code.Infrastructure.Configs
         {
             CellConfig cell = GetCell(x, y);
             if (cell.ColorStack == null)
-                cell.ColorStack = new ColorStack();
+                cell.ColorStack = new ColorStack(new List<HexColor>());
             return cell.ColorStack;
         }
 

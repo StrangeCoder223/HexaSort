@@ -13,16 +13,20 @@ namespace _Project.Code
     public class GameEntry : SceneEntry
     {
         [SerializeField] private List<BaseScreen> _screens;
+        
+        private StackOfferSpawner _stackOfferSpawner;
+        private LevelGenerator _levelGenerator;
         private IPersistentService _persistent;
         private IConfigService _configService;
-        private LevelGenerator _levelGenerator;
 
         [Inject]
-        private void Construct(IPersistentService persistent, IConfigService configService, LevelGenerator levelGenerator)
+        private void Construct(IPersistentService persistent, IConfigService configService, LevelGenerator levelGenerator, 
+            StackOfferSpawner offerSpawner)
         {
             _persistent = persistent;
             _configService = configService;
             _levelGenerator = levelGenerator;
+            _stackOfferSpawner = offerSpawner;
         }
         
         public override void Initialize()
@@ -31,9 +35,12 @@ namespace _Project.Code
             InitializeUI();
         }
 
-        private void InitializeGameplay()
+        private async void InitializeGameplay()
         {
-            _levelGenerator.Generate(_persistent.Data.Progress.Level);
+            _levelGenerator.Initialize();
+            
+            await _levelGenerator.Generate();
+            _stackOfferSpawner.Initialize().Forget();
         }
 
         private void InitializeUI()

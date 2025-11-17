@@ -3,6 +3,7 @@ using _Project.Code.Infrastructure.Data;
 using _Project.Code.Infrastructure.Factories;
 using _Project.Code.Infrastructure.Services.ConfigService;
 using _Project.Code.Infrastructure.Services.PersistentService;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _Project.Code.Gameplay
@@ -20,39 +21,70 @@ namespace _Project.Code.Gameplay
             _gameFactory = gameFactory;
         }
 
-        public async void Generate(int level)
+        public void Initialize()
         {
-            LevelConfig levelConfig = _configService.ForLevel(level);
+            LevelConfig levelConfig = _configService.ForLevel(_persistent.Data.Progress.Level);
+            
+            if (_persistent.Data.Progress.LevelData == null)
+            {
+                _persistent.Data.Progress.LevelData = new()
+                {
+                    Width = levelConfig.Width,
+                    Height = levelConfig.Height,
+                    Cells = new(),
+                    Goals = new()
+                };
+
+                for (int i = 0; i < levelConfig.Cells.Count; i++)
+                {
+                    if (levelConfig.Cells[i].Type == HexCellType.Locked)
+                        continue;
+
+                    int x = i % levelConfig.Width;
+                    int y = i / levelConfig.Width;
+                    
+                    _persistent.Data.Progress.LevelData.Cells.Add(new CellData()
+                    {
+                        X = x,
+                        Y = y,
+                        Cost = levelConfig.Cells[i].Cost,
+                        StackColors = levelConfig.Cells[i].ColorStack.Colors
+                    });
+                }
+            }
+        }
+
+        public async UniTask Generate()
+        {
             GeneratorConfig generatorConfig = _configService.ForGenerator();
-            SessionData sessionData = _persistent.Data.Progress.SessionData;
+            LevelData levelData = _persistent.Data.Progress.LevelData;
             
             float hexRadius = generatorConfig.HexRadius;
             float hexWidth = hexRadius * generatorConfig.HexWidthMultiplier;
             float hexHeight = hexRadius * Mathf.Sqrt(3f);
             float horizontalSpacing = hexWidth * generatorConfig.HorizontalSpacingMultiplier;
             
-            Vector3 gridCenter = CalculateGridCenter(levelConfig, horizontalSpacing, hexHeight, generatorConfig.ColumnOffsetMultiplier);
+            Vector3 gridCenter = CalculateGridCenter(levelData.Width, levelData.Height, 
+                horizontalSpacing, hexHeight, generatorConfig.ColumnOffsetMultiplier);
+            
             Vector3 targetCenter = Vector3.zero;
             
             Vector3 offset = targetCenter - gridCenter;
             
-            for (int i = 0; i < levelConfig.Cells.Count; i++)
+            for (int i = 0; i < levelData.Cells.Count; i++)
             {
-                if (levelConfig.Cells[i].Type == HexCellType.Locked)
-                    continue;
+                CellData cellData = levelData.Cells[i];
                 
-                CellConfig cellConfig = levelConfig.Cells[i];
+                Vector3 cellPosition = GetCellPosition(cellData.X, cellData.Y, horizontalSpacing, hexHeight, offset, generatorConfig.ColumnOffsetMultiplier);
                 
-                int x = i % levelConfig.Width;
-                int y = i / levelConfig.Width;
-                
-                Vector3 cellPosition = GetCellPosition(x, y, horizontalSpacing, hexHeight, offset, generatorConfig.ColumnOffsetMultiplier);
-                
-                Cell emptyCell = await _gameFactory.CreateEmptyCell();
+                Cell emptyCell = await _gameFactory.CreateEmptyCell(cellData);
                 emptyCell.transform.position = cellPosition;
-                
-                HexStack hexStack = await _gameFactory.CreateHexStack(cellConfig.ColorStack);
-                emptyCell.Occupy(hexStack);
+
+                if (cellData.StackColors.Count > 0)
+                {
+                    HexStack hexStack = await _gameFactory.CreateHexStack(new ColorStack(cellData.StackColors));
+                    emptyCell.Occupy(hexStack);
+                }
             }
         }
 
@@ -66,16 +98,16 @@ namespace _Project.Code.Gameplay
             return position + offset;
         }
 
-        private Vector3 CalculateGridCenter(LevelConfig levelConfig, float horizontalSpacing, float hexHeight, float oddColumnOffsetMultiplier)
+        private Vector3 CalculateGridCenter(int width, int height, float horizontalSpacing, float hexHeight, float oddColumnOffsetMultiplier)
         {
-            float gridWidth = (levelConfig.Width - 1) * horizontalSpacing;
+            float gridWidth = (width - 1) * horizontalSpacing;
 
             float minZ = float.MaxValue;
             float maxZ = float.MinValue;
 
-            for (int y = 0; y < levelConfig.Height; y++)
+            for (int y = 0; y < height; y++)
             {
-                for (int x = 0; x < levelConfig.Width; x++)
+                for (int x = 0; x < width; x++)
                 {
                     float offsetY = (x % 2 == 1) ? hexHeight * oddColumnOffsetMultiplier : 0f;
                     float z = y * hexHeight + offsetY;

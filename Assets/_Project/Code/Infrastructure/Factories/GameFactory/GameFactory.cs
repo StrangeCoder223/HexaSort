@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using _Project.Code.Gameplay;
 using _Project.Code.Infrastructure.Configs;
+using _Project.Code.Infrastructure.Data;
 using _Project.Code.Infrastructure.Services.AssetProvider;
 using _Project.Code.Infrastructure.Services.ConfigService;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace _Project.Code.Infrastructure.Factories
 {
@@ -16,9 +18,12 @@ namespace _Project.Code.Infrastructure.Factories
             _configService = configService;
         }
 
-        public async UniTask<Cell> CreateEmptyCell()
+        public async UniTask<Cell> CreateEmptyCell(CellData cellData)
         {
-            return await InstantiateInjectedObject<Cell>(RuntimeConstants.AssetLabels.CellPrefab);
+            Cell cell = await InstantiateInjectedObject<Cell>(RuntimeConstants.AssetLabels.CellPrefab);
+            cell.Construct(cellData);
+
+            return cell;
         }
         
         public async UniTask<HexStack> CreateHexStack(ColorStack colorStack)
@@ -39,6 +44,15 @@ namespace _Project.Code.Infrastructure.Factories
             hexStack.Construct(hexes);
             hexStack.Initialize();
 
+            return hexStack;
+        }
+
+        public async UniTask<HexStack> CreateDraggableHexStack(ColorStack colorStack)
+        {
+            HexStack hexStack = await CreateHexStack(colorStack);
+            hexStack.gameObject.AddComponent<BoxCollider>();
+            hexStack.gameObject.AddComponent<StackDrag>().Construct(hexStack);
+            
             return hexStack;
         }
     }

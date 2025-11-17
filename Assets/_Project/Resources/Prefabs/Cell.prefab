@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4806597374871049599}
   - component: {fileID: 552164660137246846}
   - component: {fileID: 6404949009022430526}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 22549cc047b7b2845b8ce5264cb880d7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -99,7 +99,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8243182191433425664}
   - component: {fileID: 623186814549009299}
-  m_Layer: 0
+  - component: {fileID: 6549837645308408952}
+  m_Layer: 6
   m_Name: Cell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,3 +135,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fed883e90d1a4450ab539eb540c85a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Code.Gameplay.Cell
+  _cellRenderer: {fileID: 6404949009022430526}
+--- !u!65 &6549837645308408952
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3236577920319869963}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.81, y: 0.16, z: 0.84}
+  m_Center: {x: 0, y: 0, z: 0}

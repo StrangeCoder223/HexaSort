@@ -6,9 +6,13 @@ namespace _Project.Code.Infrastructure.Installers
 {
     public class GameplayInstaller : MonoBehaviour, IInstaller
     {
+        [SerializeField] private StackOfferSpawner _stackOfferSpawner;
+        
         public void InstallBindings(ContainerBuilder containerBuilder)
         {
-            containerBuilder.AddTransient(typeof(LevelGenerator));
+            containerBuilder.AddSingleton(typeof(LevelGenerator));
+            containerBuilder.AddSingleton(typeof(StackOfferGenerator));
+            containerBuilder.AddSingleton(_stackOfferSpawner, typeof(StackOfferSpawner));
         }
     }
 }

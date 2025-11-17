@@ -23,7 +23,7 @@ namespace _Project.Code.Editor
         public static void Show(Vector2 position, ColorStack currentStack, System.Action<ColorStack> onConfirm)
         {
             var window = CreateInstance<ColorStackPopup>();
-            window.colorStack = new ColorStack();
+            window.colorStack = new ColorStack(new List<HexColor>());
             
             // Копируем текущую стопку
             if (currentStack != null && currentStack.Colors != null)

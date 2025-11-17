@@ -28,7 +28,7 @@ namespace _Project.Code.UI
             base.Show();
 
             _goalWidgets = new List<GoalWidget>();
-            List<GoalData> goals = _persistentService.Data.Progress.SessionData.Goals;
+            List<GoalData> goals = _persistentService.Data.Progress.LevelData.Goals;
 
             for (int i = 0; i < goals.Count; i++)
             {

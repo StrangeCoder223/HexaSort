@@ -13,14 +13,25 @@ namespace _Project.Code.Infrastructure.Data
         public ReactiveProperty<int> Money;
         public ReactiveProperty<int> Life;
         public ReactiveProperty<int> LifeRestoreTime;
-        
-        public SessionData SessionData;
+        public LevelData LevelData;
     }
 
     [Serializable]
-    public class SessionData
+    public class LevelData
     {
+        public int Width;
+        public int Height;
         public List<GoalData> Goals;
+        public List<CellData> Cells;
+    }
+
+    [Serializable]
+    public class CellData
+    {
+        public int X;
+        public int Y;
+        public int Cost;
+        public List<HexColor> StackColors;
     }
 
     [Serializable]
