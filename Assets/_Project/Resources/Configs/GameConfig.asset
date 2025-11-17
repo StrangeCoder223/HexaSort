@@ -17,3 +17,14 @@ MonoBehaviour:
     LifeRestoreTime: 2
   Levels:
   - {fileID: 11400000, guid: d0c6206317c40774a9aee5963dd20d92, type: 2}
+  Colors:
+  - HexColor: 0
+    MeshColor: {r: 1, g: 0, b: 0, a: 1}
+  - HexColor: 1
+    MeshColor: {r: 0.08547807, g: 1, b: 0, a: 1}
+  - HexColor: 2
+    MeshColor: {r: 0, g: 0.16567636, b: 1, a: 1}
+  - HexColor: 3
+    MeshColor: {r: 0.94853306, g: 1, b: 0, a: 1}
+  - HexColor: 4
+    MeshColor: {r: 0.71313953, g: 0, b: 1, a: 1}

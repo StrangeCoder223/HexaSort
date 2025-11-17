@@ -32,9 +32,9 @@ namespace _Project.Code
             await _sceneLoader.LoadScene(RuntimeConstants.Scenes.Game);
         }
 
-        private void BootServices()
+        private async void BootServices()
         {
-            _configService.Load();
+            await _configService.Load();
             
             PersistentData savedData = _saveLoadService.Load();
 

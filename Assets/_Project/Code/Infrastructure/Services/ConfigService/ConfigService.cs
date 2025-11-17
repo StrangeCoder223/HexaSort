@@ -1,5 +1,8 @@
+using System.Linq;
 using _Project.Code.Infrastructure.Configs;
 using _Project.Code.Infrastructure.Services.AssetProvider;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace _Project.Code.Infrastructure.Services.ConfigService
 {
@@ -13,7 +16,7 @@ namespace _Project.Code.Infrastructure.Services.ConfigService
             _assetProvider = assetProvider;
         }
         
-        public async void Load()
+        public async UniTask Load()
         {
             _gameConfig = await _assetProvider.LoadAsset<GameConfig>(RuntimeConstants.AssetLabels.GameConfig);
         }
@@ -26,6 +29,16 @@ namespace _Project.Code.Infrastructure.Services.ConfigService
         public LevelConfig ForLevel(int level)
         {
             return _gameConfig.Levels[level - 1];
+        }
+
+        public ColorConfig ForHexColor(HexColor hexColor)
+        {
+            return _gameConfig.Colors.FirstOrDefault(x => x.HexColor == hexColor);
+        }
+
+        public GeneratorConfig ForGenerator()
+        {
+            return _gameConfig.Generator;
         }
     }
 }

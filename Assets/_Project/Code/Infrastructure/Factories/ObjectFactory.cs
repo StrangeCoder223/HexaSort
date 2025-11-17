@@ -13,7 +13,6 @@ namespace _Project.Code.Infrastructure.Factories
         protected ObjectFactory(IAssetProvider assetProvider)
         {
             _assetProvider = assetProvider;
-            
         }
         
         protected async UniTask<T> InstantiateInjectedObject<T>(string path, RectTransform parent = null) where T : Object

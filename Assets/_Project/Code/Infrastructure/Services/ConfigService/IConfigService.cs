@@ -1,4 +1,6 @@
 using _Project.Code.Infrastructure.Configs;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace _Project.Code.Infrastructure.Services.ConfigService
 {
@@ -6,6 +8,8 @@ namespace _Project.Code.Infrastructure.Services.ConfigService
     {
         LevelConfig ForLevel(int level);
         MetaConfig ForMeta();
-        void Load();
+        UniTask Load();
+        ColorConfig ForHexColor(HexColor hexColor);
+        GeneratorConfig ForGenerator();
     }
 }
