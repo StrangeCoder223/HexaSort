@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using _Project.Code.Infrastructure.Configs;
 using _Project.Code.Infrastructure.Data;
 using _Project.Code.Infrastructure.Factories;
@@ -10,16 +11,21 @@ namespace _Project.Code.Gameplay
 {
     public class LevelGenerator
     {
+        public IReadOnlyList<Cell> GeneratedCells => _generatedCells;
+        
         private readonly IGameFactory _gameFactory;
         private readonly IConfigService _configService;
         private readonly IPersistentService _persistent;
+        private List<Cell> _generatedCells;
 
         public LevelGenerator(IPersistentService persistent, IConfigService configService, IGameFactory gameFactory)
         {
             _persistent = persistent;
             _configService = configService;
             _gameFactory = gameFactory;
+            _generatedCells = new List<Cell>();
         }
+
 
         public void Initialize()
         {
@@ -51,6 +57,15 @@ namespace _Project.Code.Gameplay
                         StackColors = levelConfig.Cells[i].ColorStack.Colors
                     });
                 }
+                
+                levelConfig.Goals.ForEach(x =>
+                {
+                    _persistent.Data.Progress.LevelData.Goals.TryAdd(x.TargetColor, new GoalData()
+                    {
+                        CurrentAmount = new(0),
+                        TargetAmount = x.Amount
+                    });
+                });
             }
         }
 
@@ -85,6 +100,8 @@ namespace _Project.Code.Gameplay
                     HexStack hexStack = await _gameFactory.CreateHexStack(new ColorStack(cellData.StackColors));
                     emptyCell.Occupy(hexStack);
                 }
+                
+                _generatedCells.Add(emptyCell);
             }
         }
 

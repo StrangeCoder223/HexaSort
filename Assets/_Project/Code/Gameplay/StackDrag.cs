@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace _Project.Code.Gameplay
 {
@@ -26,15 +27,16 @@ namespace _Project.Code.Gameplay
         
         private void OnMouseDown()
         {
-            if (IsTweenPlaying())
+            if (CantDrag())
                 return;
             
             _originalPosition = transform.position;
         }
 
+
         private void OnMouseDrag()
         {
-            if (IsTweenPlaying())
+            if (CantDrag())
                 return;
             
             Vector3 newPosition = GetMouseWorldPosition();
@@ -45,7 +47,7 @@ namespace _Project.Code.Gameplay
         
         private void OnMouseUp()
         {
-            if (IsTweenPlaying())
+            if (CantDrag())
                 return;
             
             _tween.Kill(true);
@@ -62,6 +64,8 @@ namespace _Project.Code.Gameplay
             else
                 _tween = transform.DOMove(_originalPosition, 0.2f);
         }
+        
+        private bool CantDrag() => IsTweenPlaying() || EventSystem.current.IsPointerOverGameObject();
 
         private bool IsTweenPlaying()
         {

@@ -28,11 +28,10 @@ namespace _Project.Code.UI
             base.Show();
 
             _goalWidgets = new List<GoalWidget>();
-            List<GoalData> goals = _persistentService.Data.Progress.LevelData.Goals;
 
-            for (int i = 0; i < goals.Count; i++)
+            foreach (var goal in _persistentService.Data.Progress.LevelData.Goals)
             {
-                GoalWidget goalWidget = await _uiFactory.CreateGoalWidget(goals[i], _goalsContainer);
+                GoalWidget goalWidget = await _uiFactory.CreateGoalWidget(goal.Value, _goalsContainer);
                 _goalWidgets.Add(goalWidget);
             }
         }

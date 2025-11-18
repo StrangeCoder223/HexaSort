@@ -165,6 +165,11 @@ namespace _Project.Code.Editor
                                 Repaint();
                             });
                         }
+                        // Если тип НЕ Occupied - очищаем ColorStack
+                        else
+                        {
+                            activeLevel.SetCellColorStack(gx, gy, new ColorStack(new System.Collections.Generic.List<HexColor>()));
+                        }
                         
                         GUI.changed = true;
                         Event.current.Use();
@@ -327,6 +332,7 @@ namespace _Project.Code.Editor
                 HexColor.Blue => Color.blue,
                 HexColor.Yellow => Color.yellow,
                 HexColor.Purple => new Color(0.6f, 0f, 1f),
+                HexColor.Any => Color.grey,
                 _ => Color.white
             };
         }

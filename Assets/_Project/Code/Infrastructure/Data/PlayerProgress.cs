@@ -21,7 +21,7 @@ namespace _Project.Code.Infrastructure.Data
     {
         public int Width;
         public int Height;
-        public List<GoalData> Goals;
+        public Dictionary<HexColor, GoalData> Goals;
         public List<CellData> Cells;
     }
 
@@ -37,7 +37,6 @@ namespace _Project.Code.Infrastructure.Data
     [Serializable]
     public class GoalData
     {
-        public HexColor TargetColor;
         public int TargetAmount;
         public ReactiveProperty<int> CurrentAmount;
     }

@@ -102,6 +102,7 @@ namespace _Project.Code.Gameplay
             {
                 var newColors = Enum.GetValues(typeof(HexColor))
                     .Cast<HexColor>()
+                    .Where(c => c != HexColor.Any)
                     .Except(topColors)
                     .ToList();
                 
@@ -136,7 +137,8 @@ namespace _Project.Code.Gameplay
                 return new List<HexColor>();
 
             return level.Goals
-                .Select(goal => goal.TargetColor)
+                .Select(goal => goal.Key)
+                .Where(color => color != HexColor.Any)
                 .Distinct()
                 .ToList();
         }

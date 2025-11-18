@@ -28,6 +28,9 @@ namespace _Project.Code.Infrastructure.Services.ConfigService
         
         public LevelConfig ForLevel(int level)
         {
+            if (_gameConfig.Levels.Count < level)
+                return null;
+            
             return _gameConfig.Levels[level - 1];
         }
 

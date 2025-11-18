@@ -12,11 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70e656933ac4478f8e74ea7628bd5440, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Code.Infrastructure.Configs.GameConfig
+  Generator:
+    MaxOffersCount: 3
+    MinStackHeight: 2
+    MaxStackHeight: 6
+    PureStackChance: 0.3
+    NewColorChance: 0.1
+    HexRadius: 0.5
+    HexWidthMultiplier: 2
+    HorizontalSpacingMultiplier: 0.75
+    ColumnOffsetMultiplier: 0.5
   Meta:
     MaxLife: 5
     LifeRestoreTime: 2
   Levels:
   - {fileID: 11400000, guid: d0c6206317c40774a9aee5963dd20d92, type: 2}
+  - {fileID: 11400000, guid: 478b812a3e8fba641a858cbb145dc538, type: 2}
   Colors:
   - HexColor: 0
     MeshColor: {r: 1, g: 0, b: 0, a: 1}

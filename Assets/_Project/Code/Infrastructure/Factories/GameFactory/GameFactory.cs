@@ -41,8 +41,7 @@ namespace _Project.Code.Infrastructure.Factories
                 hexes.Add(hex);
             }
             
-            hexStack.Construct(hexes);
-            hexStack.Initialize();
+            hexStack.Initialize(hexes);
 
             return hexStack;
         }

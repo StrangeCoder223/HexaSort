@@ -30,12 +30,20 @@ namespace _Project.Code.Infrastructure.Configs
         }
     }
 
+    [Serializable]
+    public class GoalConfig
+    {
+        public HexColor TargetColor;
+        public int Amount;
+    }
+
     [CreateAssetMenu(menuName = "Hexa Sort/Level Config", fileName = "NewLevelConfig")]
     public class LevelConfig : ScriptableObject
     {
         public int Width = 8;
         public int Height = 6;
         public List<CellConfig> Cells = new List<CellConfig>();
+        public List<GoalConfig> Goals;
 
         public void EnsureSize()
         {
@@ -153,6 +161,7 @@ namespace _Project.Code.Infrastructure.Configs
 
     public enum HexColor
     {
+        Any = -1,
         Red = 0,
         Green = 1,
         Blue = 2,

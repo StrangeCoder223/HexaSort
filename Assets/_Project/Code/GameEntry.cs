@@ -13,6 +13,8 @@ namespace _Project.Code
     public class GameEntry : SceneEntry
     {
         [SerializeField] private List<BaseScreen> _screens;
+        [SerializeField] private HexStackTransfer _hexStackTransfer;
+        [SerializeField] private Hud _hud;
         
         private StackOfferSpawner _stackOfferSpawner;
         private LevelGenerator _levelGenerator;
@@ -40,12 +42,15 @@ namespace _Project.Code
             _levelGenerator.Initialize();
             
             await _levelGenerator.Generate();
+            
+            _hexStackTransfer.Initialize();
             _stackOfferSpawner.Initialize().Forget();
         }
 
         private void InitializeUI()
         {
             _screens.ForEach(x => x.Initialize());
+            _hud.Initialize();
         }
     }
 }
