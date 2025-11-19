@@ -37,6 +37,7 @@ namespace _Project.Code.Infrastructure.Data
     [Serializable]
     public class GoalData
     {
+        public HexColor HexColor;
         public int TargetAmount;
         public ReactiveProperty<int> CurrentAmount;
     }

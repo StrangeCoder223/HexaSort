@@ -33,7 +33,7 @@ namespace _Project.Code.Infrastructure.Factories
             List<Hex> hexes = new List<Hex>();
             for (int i = 0; i < colorStack.Colors.Count; i++)
             {
-                ColorConfig colorConfig = _configService.ForHexColor(colorStack.Colors[i]);
+                HexConfig colorConfig = _configService.ForHex(colorStack.Colors[i]);
                 
                 Hex hex = await InstantiateInjectedObject<Hex>(RuntimeConstants.AssetLabels.HexPrefab);
                 hex.Initialize(colorConfig);

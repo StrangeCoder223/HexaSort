@@ -8,9 +8,9 @@ namespace _Project.Code.Gameplay
         public HexColor Color => _colorConfig.HexColor;
         
         [SerializeField] private MeshRenderer _meshRenderer;
-        private ColorConfig _colorConfig;
+        private HexConfig _colorConfig;
         
-        public void Initialize(ColorConfig colorConfig)
+        public void Initialize(HexConfig colorConfig)
         {
             _meshRenderer.material.color = colorConfig.MeshColor;
             _colorConfig = colorConfig;

@@ -10,7 +10,7 @@ namespace _Project.Code.Infrastructure.Configs
         public GeneratorConfig Generator;
         public MetaConfig Meta;
         public List<LevelConfig> Levels;
-        public List<ColorConfig> Colors;
+        public List<HexConfig> Hexes;
     }
 
     [Serializable]
@@ -30,9 +30,10 @@ namespace _Project.Code.Infrastructure.Configs
     }
 
     [Serializable]
-    public class ColorConfig
+    public class HexConfig
     {
         public HexColor HexColor;
         public Color MeshColor;
+        public Sprite Icon;
     }
 }

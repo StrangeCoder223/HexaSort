@@ -9,8 +9,10 @@ namespace _Project.Code.UI
     {
         [SerializeField] private Slider _progress;
         
-        public override void Initialize(GoalData goalData)
+        public override void Initialize(GoalData goalData, Sprite icon)
         {
+            base.Initialize(goalData, icon);
+            
             goalData.CurrentAmount.Subscribe(current => RefreshProgress(current, goalData.TargetAmount)).AddTo(this);
         }
 

@@ -17,6 +17,7 @@ namespace _Project.Code.Gameplay
         private readonly IConfigService _configService;
         private readonly IPersistentService _persistent;
         private List<Cell> _generatedCells;
+        private Transform _gridCenterTransform;
 
         public LevelGenerator(IPersistentService persistent, IConfigService configService, IGameFactory gameFactory)
         {
@@ -26,9 +27,10 @@ namespace _Project.Code.Gameplay
             _generatedCells = new List<Cell>();
         }
 
-
-        public void Initialize()
+        public void Initialize(Transform gridCenterTransform)
         {
+            _gridCenterTransform = gridCenterTransform;
+            
             LevelConfig levelConfig = _configService.ForLevel(_persistent.Data.Progress.Level);
             
             if (_persistent.Data.Progress.LevelData == null)
@@ -62,6 +64,7 @@ namespace _Project.Code.Gameplay
                 {
                     _persistent.Data.Progress.LevelData.Goals.TryAdd(x.TargetColor, new GoalData()
                     {
+                        HexColor = x.TargetColor,
                         CurrentAmount = new(0),
                         TargetAmount = x.Amount
                     });
@@ -82,7 +85,7 @@ namespace _Project.Code.Gameplay
             Vector3 gridCenter = CalculateGridCenter(levelData.Width, levelData.Height, 
                 horizontalSpacing, hexHeight, generatorConfig.ColumnOffsetMultiplier);
             
-            Vector3 targetCenter = Vector3.zero;
+            Vector3 targetCenter = _gridCenterTransform.position;
             
             Vector3 offset = targetCenter - gridCenter;
             

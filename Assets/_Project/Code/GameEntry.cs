@@ -12,6 +12,7 @@ namespace _Project.Code
 {
     public class GameEntry : SceneEntry
     {
+        [SerializeField] private Transform _gridCenterTransform;
         [SerializeField] private List<BaseScreen> _screens;
         [SerializeField] private HexStackTransfer _hexStackTransfer;
         [SerializeField] private Hud _hud;
@@ -39,7 +40,7 @@ namespace _Project.Code
 
         private async void InitializeGameplay()
         {
-            _levelGenerator.Initialize();
+            _levelGenerator.Initialize(_gridCenterTransform);
             
             await _levelGenerator.Generate();
             

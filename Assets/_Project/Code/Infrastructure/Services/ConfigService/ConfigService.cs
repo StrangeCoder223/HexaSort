@@ -34,9 +34,9 @@ namespace _Project.Code.Infrastructure.Services.ConfigService
             return _gameConfig.Levels[level - 1];
         }
 
-        public ColorConfig ForHexColor(HexColor hexColor)
+        public HexConfig ForHex(HexColor hexColor)
         {
-            return _gameConfig.Colors.FirstOrDefault(x => x.HexColor == hexColor);
+            return _gameConfig.Hexes.FirstOrDefault(x => x.HexColor == hexColor);
         }
 
         public GeneratorConfig ForGenerator()

@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Code.UI.GoalProgressWidget
   <GoalText>k__BackingField: {fileID: 0}
+  _icon: {fileID: 0}
   _progress: {fileID: 0}
 --- !u!1 &1284795190827180144
 GameObject:
@@ -123,8 +124,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -0.05039978, y: -0.090400696}
-  m_SizeDelta: {x: -4.8015, y: 11.1666}
+  m_AnchoredPosition: {x: -0.18060303, y: -0.090400696}
+  m_SizeDelta: {x: -5.062, y: 11.1666}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2300563623753281980
 GameObject:
@@ -193,7 +194,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 70290c7a51e964754b5bce30aa6171aa, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 50637a2ec7f77462790bbcf17780a22c, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -202,7 +203,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 1.45
 --- !u!114 &1827098054904051545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,8 +283,8 @@ RectTransform:
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6816384464750477456}
   - {fileID: 7828547825436238245}
+  - {fileID: 6816384464750477456}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -312,6 +313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Code.UI.GoalProgressWidget
   <GoalText>k__BackingField: {fileID: 989873214405999671}
+  _icon: {fileID: 5275787335384936471}
   _progress: {fileID: 5694798575619770608}
 --- !u!1 &4626247146956333778
 GameObject:
@@ -378,7 +380,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 151a8cae9925a485abb1f2e6540f393d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ade001ac5f0c748109afa534f9994cb3, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -560,7 +562,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 43.9, y: -2}
+  m_AnchoredPosition: {x: 27.77, y: -2}
   m_SizeDelta: {x: 160, y: 61.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5694798575619770608

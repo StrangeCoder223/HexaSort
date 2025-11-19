@@ -28,14 +28,22 @@ MonoBehaviour:
   Levels:
   - {fileID: 11400000, guid: d0c6206317c40774a9aee5963dd20d92, type: 2}
   - {fileID: 11400000, guid: 478b812a3e8fba641a858cbb145dc538, type: 2}
-  Colors:
+  Hexes:
   - HexColor: 0
     MeshColor: {r: 1, g: 0, b: 0, a: 1}
+    Icon: {fileID: 21300000, guid: 2feb992586749f446af08cc391ba8374, type: 3}
   - HexColor: 1
-    MeshColor: {r: 0.08547807, g: 1, b: 0, a: 1}
+    MeshColor: {r: 0, g: 1, b: 0.084820986, a: 1}
+    Icon: {fileID: 21300000, guid: f84c54b053155f84a9010ca5991e7505, type: 3}
   - HexColor: 2
-    MeshColor: {r: 0, g: 0.16567636, b: 1, a: 1}
+    MeshColor: {r: 0, g: 0.29986382, b: 1, a: 1}
+    Icon: {fileID: 21300000, guid: 163846dbb7535d84f9651c927e2f2ccd, type: 3}
   - HexColor: 3
-    MeshColor: {r: 0.94853306, g: 1, b: 0, a: 1}
+    MeshColor: {r: 1, g: 0.86404645, b: 0, a: 1}
+    Icon: {fileID: 21300000, guid: c7f053265169b9b459337a5561da4e35, type: 3}
   - HexColor: 4
-    MeshColor: {r: 0.71313953, g: 0, b: 1, a: 1}
+    MeshColor: {r: 0.4522934, g: 0, b: 1, a: 1}
+    Icon: {fileID: 0}
+  - HexColor: -1
+    MeshColor: {r: 0, g: 0, b: 0, a: 0}
+    Icon: {fileID: 21300000, guid: 33cdc48b6680b2f47992317d9c32d17f, type: 3}

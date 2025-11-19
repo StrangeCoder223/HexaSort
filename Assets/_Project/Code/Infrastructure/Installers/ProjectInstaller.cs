@@ -31,7 +31,7 @@ namespace _Project.Code.Infrastructure.Installers
             _saveLoadService = new SaveLoadService(_persistentService);
             _sceneLoader = CreateSceneLoader();
 
-            _uiFactory = new UIFactory(_assetProvider);
+            _uiFactory = new UIFactory(_assetProvider, _configService);
             _gameFactory = new GameFactory(_assetProvider, _configService);
             
             builder.AddSingleton(_configService, typeof(IConfigService));

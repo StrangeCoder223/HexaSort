@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using _Project.Code.Infrastructure.Configs;
 using _Project.Code.Infrastructure.Factories;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Reflex.Attributes;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ namespace _Project.Code.Gameplay
     public class StackOfferSpawner : MonoBehaviour
     {
         [SerializeField] private float _spacing;
+        [SerializeField] private Vector3 _showPosition;
+        [SerializeField] private Vector3 _hidePosition;
         
         private List<StackDrag> _stackDrags = new();
         private StackOfferGenerator _stackOfferGenerator;
@@ -29,6 +32,8 @@ namespace _Project.Code.Gameplay
 
         private async UniTask Spawn()
         {
+            transform.position = _hidePosition;
+            
             List<ColorStack> colorStacks = _stackOfferGenerator.GenerateWeightedOffers();
 
             for (int i = 0; i < colorStacks.Count; i++)
@@ -41,6 +46,8 @@ namespace _Project.Code.Gameplay
                 stackDrag.DraggedSuccessful += RemoveStack;
                 _stackDrags.Add(stackDrag);
             }
+
+            await transform.DOMove(_showPosition, 0.4f).AsyncWaitForCompletion().AsUniTask();
         }
 
         private async void RemoveStack(StackDrag stackDrag)

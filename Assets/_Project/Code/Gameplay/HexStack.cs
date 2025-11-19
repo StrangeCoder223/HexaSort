@@ -76,8 +76,9 @@ namespace _Project.Code.Gameplay
         private async UniTask AnimateHexesTransfer(List<Hex> hexes, Vector3 targetPosition, int targetStackCount)
         {
             const float ArcHeight = 2f;
-            const float AnimationDuration = 0.18f;
-            const float DelayBetweenHexes = 0.04f;
+            const float AnimationDuration = 0.5f;
+            const float DelayBetweenHexes = 0.08f;
+            const float RotationAmount = -180f;
 
             List<UniTask> animationTasks = new List<UniTask>();
             
@@ -90,12 +91,21 @@ namespace _Project.Code.Gameplay
                 Vector3 end = targetPosition + _hexStep * (targetStackCount + i);
                 Vector3[] path = CreateParabolicPath(start, end, ArcHeight);
                 
-                Tween tween = hex.transform
+                // Всегда вращаем по Z оси
+                Vector3 rotationAxis = new Vector3(0f, 0f, RotationAmount);
+                
+                Tween moveTween = hex.transform
                     .DOPath(path, AnimationDuration, PathType.CatmullRom)
                     .SetEase(Ease.InOutQuad)
                     .SetDelay(i * DelayBetweenHexes);
                 
-                animationTasks.Add(tween.AsyncWaitForCompletion().AsUniTask());
+                Tween rotateTween = hex.transform
+                    .DORotate(rotationAxis, AnimationDuration, RotateMode.LocalAxisAdd)
+                    .SetEase(Ease.InOutQuad)
+                    .SetDelay(i * DelayBetweenHexes);
+                
+                animationTasks.Add(moveTween.AsyncWaitForCompletion().AsUniTask());
+                animationTasks.Add(rotateTween.AsyncWaitForCompletion().AsUniTask());
             }
             
             await UniTask.WhenAll(animationTasks);

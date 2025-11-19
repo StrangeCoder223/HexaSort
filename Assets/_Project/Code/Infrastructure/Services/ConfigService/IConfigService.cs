@@ -9,7 +9,7 @@ namespace _Project.Code.Infrastructure.Services.ConfigService
         LevelConfig ForLevel(int level);
         MetaConfig ForMeta();
         UniTask Load();
-        ColorConfig ForHexColor(HexColor hexColor);
+        HexConfig ForHex(HexColor hexColor);
         GeneratorConfig ForGenerator();
     }
 }
