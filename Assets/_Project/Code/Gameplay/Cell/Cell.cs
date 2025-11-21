@@ -6,7 +6,7 @@ namespace _Project.Code.Gameplay
 {
     public class Cell : MonoBehaviour
     {
-        public static event Action<Cell> Occupied;
+        public event Action<Cell> Occupied;
         
         public bool IsOccupied => _hexStack != null;
         public HexStack HexStack => _hexStack;

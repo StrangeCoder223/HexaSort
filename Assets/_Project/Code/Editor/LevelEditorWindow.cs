@@ -10,8 +10,8 @@ namespace _Project.Code.Editor
         public static void Open() => GetWindow<LevelEditorWindow>("Hex Grid");
         
         private LevelConfig activeLevel;
-        private float hexRadius = 30f;   // радиус гекса
-        private int selectedType = 1;    // тип плитки для "рисования"
+        private float hexRadius = 30f;
+        private int selectedType = 1; 
         private Vector2 scroll;
         
         protected void OnGUI()
@@ -87,13 +87,11 @@ namespace _Project.Code.Editor
         private void DrawHexCell(Vector2 center, float radius, HexCellType type, int gx, int gy)
         {
             Vector3[] pts = GetHexPoints(center, radius);
-
-            // Заливка
+            
             Handles.color = GetColor(type, gx, gy);
             Handles.DrawAAConvexPolygon(pts);
 
-            // Контур (коричневый цвет как на изображении)
-            Handles.color = new Color(0.6f, 0.4f, 0.3f); // коричневый
+            Handles.color = new Color(0.6f, 0.4f, 0.3f);
             Handles.DrawAAPolyLine(3f, pts[0], pts[1], pts[2], pts[3], pts[4], pts[5], pts[0]);
 
             // Превью стопки цветов для Occupied клеток
@@ -111,7 +109,6 @@ namespace _Project.Code.Editor
                     fontSize = 8
                 };
                 
-                // Для платных клеток показываем стоимость
                 if (type == HexCellType.Paid)
                 {
                     int cost = activeLevel.GetCellCost(gx, gy);
@@ -123,7 +120,7 @@ namespace _Project.Code.Editor
                     };
                     GUI.Label(new Rect(center.x - 25, center.y - 7, 50, 14), $"${cost}", costStyle);
                 }
-                // Для занятых клеток превью показывает всё, текст не нужен
+                
                 else if (type != HexCellType.Occupied)
                 {
                     GUI.Label(new Rect(center.x - 20, center.y - 6, 40, 12), $"{gx},{gy}", style);
@@ -218,7 +215,7 @@ namespace _Project.Code.Editor
             // Размеры области превью
             float previewWidth = radius * 1.2f;
             float maxPreviewHeight = radius * 1.2f;
-            int colorCount = Mathf.Min(stack.Colors.Count, 10); // Максимум 10 полосок
+            int colorCount = Mathf.Min(stack.Colors.Count, 10);
             float stripHeight = maxPreviewHeight / colorCount;
             
             // Начальная позиция (снизу вверх, как стопка)
@@ -252,8 +249,7 @@ namespace _Project.Code.Editor
                 );
                 Handles.EndGUI();
             }
-
-            // Если цветов больше 10, показываем "..."
+            
             if (stack.Colors.Count > 10)
             {
                 GUIStyle moreStyle = new GUIStyle(EditorStyles.miniLabel)
@@ -303,6 +299,7 @@ namespace _Project.Code.Editor
                 AssetDatabase.CreateAsset(level, path);
                 AssetDatabase.SaveAssets();
                 activeLevel = level;
+                Resources.Load<GameConfig>(RuntimeConstants.AssetLabels.GameConfig).Levels.Add(activeLevel);
             }
         }
 
@@ -311,13 +308,13 @@ namespace _Project.Code.Editor
             switch (type)
             {
                 case HexCellType.Locked:
-                    return new Color(0.3f, 0.3f, 0.3f);  // темно-серый
+                    return new Color(0.3f, 0.3f, 0.3f); 
                 case HexCellType.Empty:
-                    return Color.white;  // белый как на изображении
+                    return Color.white;
                 case HexCellType.Paid:
-                    return new Color(1f, 0.9f, 0.5f);  // светло-желтый
+                    return new Color(1f, 0.9f, 0.5f);
                 case HexCellType.Occupied:
-                    return new Color(0.8f, 0.8f, 1f);  // светло-голубой по умолчанию
+                    return new Color(0.8f, 0.8f, 1f); 
                 default:
                     return Color.white;
             }
