@@ -1,7 +1,6 @@
+using System;
 using _Project.Code.Gameplay;
-using _Project.Code.Infrastructure.Services.ConfigService;
 using _Project.Code.Infrastructure.Services.PersistentService;
-using _Project.Code.Infrastructure.Services.SceneLoader;
 using Reflex.Attributes;
 using Sirenix.Utilities;
 using UniRx;
@@ -13,29 +12,29 @@ namespace _Project.Code.UI
     public class WinScreen : BaseScreen
     {
         [SerializeField] private Button _nextButton;
-        
+        private LevelSwitcher _levelSwitcher;
         private IPersistentService _persistent;
-        private IConfigService _configService;
-        private ISceneLoader _sceneLoader;
 
         [Inject]
-        private void Construct(IPersistentService persistent, IConfigService configService, ISceneLoader sceneLoader)
+        private void Construct(IPersistentService persistent, LevelSwitcher levelSwitcher)
         {
             _persistent = persistent;
-            _configService = configService;
-            _sceneLoader = sceneLoader;
+            _levelSwitcher = levelSwitcher;
         }
 
         public override void Initialize()
         {
             base.Initialize();
-
-            _nextButton.onClick.AddListener(NextLevel);
+            
+            _nextButton.onClick.AddListener(async () => await _levelSwitcher.NextLevel());
+            
             _persistent.Data.Progress.LevelData.Goals.Values.ForEach(x =>
             {
                 x.CurrentAmount.Subscribe(_ => TryShowWin()).AddTo(this);
             });
         }
+
+        private void OnDestroy() => _nextButton.onClick.RemoveAllListeners();
 
         private void TryShowWin()
         {
@@ -57,20 +56,6 @@ namespace _Project.Code.UI
             {
                 Show();
             }
-        }
-        
-        private async void NextLevel()
-        {
-            _persistent.Data.Progress.LevelData = null;
-            
-            int nextLevel = _persistent.Data.Progress.Level + 1;
-
-            if (_configService.ForLevel(nextLevel) == null)
-                nextLevel = 1;
-
-            _persistent.Data.Progress.Level = nextLevel;
-            
-            await _sceneLoader.LoadScene(RuntimeConstants.Scenes.Game);
         }
     }
 }

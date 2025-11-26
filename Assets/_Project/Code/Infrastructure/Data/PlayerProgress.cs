@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using _Project.Code.Infrastructure.Configs;
 using UniRx;
-using UnityEngine.Serialization;
+using UnityEngine;
 
 namespace _Project.Code.Infrastructure.Data
 {
@@ -28,8 +28,7 @@ namespace _Project.Code.Infrastructure.Data
     [Serializable]
     public class CellData
     {
-        public int X;
-        public int Y;
+        public Vector2Int Position;
         public int Cost;
         public List<HexColor> StackColors;
     }

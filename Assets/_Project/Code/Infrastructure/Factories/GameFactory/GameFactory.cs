@@ -4,24 +4,41 @@ using _Project.Code.Infrastructure.Configs;
 using _Project.Code.Infrastructure.Data;
 using _Project.Code.Infrastructure.Services.AssetProvider;
 using _Project.Code.Infrastructure.Services.ConfigService;
+using _Project.Code.Infrastructure.Services.PersistentService;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _Project.Code.Infrastructure.Factories
 {
     public class GameFactory : ObjectFactory, IGameFactory
-    { 
+    {
+        public IReadOnlyList<IProgressWriter> ProgressWriters => _progressWriters;
+        public IReadOnlyList<IProgressReader> ProgressReaders => _progressReaders;
+        
+        private readonly List<IProgressWriter> _progressWriters;
+        private readonly List<IProgressReader> _progressReaders;
         private readonly IConfigService _configService;
+        private readonly IPersistentService _persistent;
 
-        public GameFactory(IAssetProvider assetProvider, IConfigService configService) : base(assetProvider)
+        public GameFactory(IAssetProvider assetProvider, IConfigService configService, IPersistentService persistent) : base(assetProvider)
         {
             _configService = configService;
+            _persistent = persistent;
+            _progressWriters = new List<IProgressWriter>();
+            _progressReaders = new List<IProgressReader>();
+        }
+        
+        public void Clear()
+        {
+            _progressWriters.Clear();
+            _progressReaders.Clear();
         }
 
         public async UniTask<Cell> CreateEmptyCell(CellData cellData)
         {
             Cell cell = await InstantiateInjectedObject<Cell>(RuntimeConstants.AssetLabels.CellPrefab);
-            cell.Construct(cellData);
+            cell.Construct(cellData.Position);
+            RegisterWriter(cell);
 
             return cell;
         }
@@ -53,6 +70,18 @@ namespace _Project.Code.Infrastructure.Factories
             hexStack.gameObject.AddComponent<StackDrag>().Construct(hexStack);
             
             return hexStack;
+        }
+        
+        private void RegisterWriter(IProgressWriter writer)
+        {
+            if (_progressWriters.Contains(writer) == false) 
+                _progressWriters.Add(writer);
+        }
+
+        private void RegisterReader(IProgressReader reader)
+        {
+            if (_progressReaders.Contains(reader) == false)
+                _progressReaders.Add(reader);
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using _Project.Code.Gameplay.Generators;
 using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using Sirenix.Utilities;
@@ -12,11 +13,11 @@ namespace _Project.Code.Gameplay
         private const int MaxRecheckIterations = 10;
         
         private Queue<Cell> _cellsToCheck;
-        private bool _isProcessing;
         private HexGridNavigator _gridNavigator;
         private HexStackMatcher _matcher;
         private HexTransferAnimator _animator;
         private LevelGenerator _generator;
+        private bool _isProcessing;
 
         [Inject]
         private void Construct(LevelGenerator generator, HexTransferAnimator animator)
@@ -25,13 +26,15 @@ namespace _Project.Code.Gameplay
             _animator = animator;
         }
         
-        public void Initialize()
+        public async UniTask Initialize()
         {
             _cellsToCheck = new Queue<Cell>();
             _gridNavigator = new HexGridNavigator(_generator.GeneratedCells);
             _matcher = new HexStackMatcher(_gridNavigator);
             
             _generator.GeneratedCells.ForEach(cell => cell.Occupied += EnqueueCell);
+
+            await RecheckAllCells();
         }
 
         private void OnDestroy()
@@ -94,31 +97,24 @@ namespace _Project.Code.Gameplay
             
             if (hexesToTransfer.Count == 0)
                 return;
-            
-            await _animator.AnimateTransfer(hexesToTransfer, toCell.HexStack.TopPosition, toCell.HexStack.HexCount);
-            
+
+            Vector3 topPosition = toCell.HexStack.TopPosition;
+            int targetCount = toCell.HexStack.HexCount;
+
             toCell.HexStack.Fill(hexesToTransfer);
+            fromCell.TryClear();
             
-            UpdateCellState(fromCell);
-            await UpdateAndCheckCell(toCell);
+            await _animator.AnimateTransfer(hexesToTransfer, topPosition, targetCount);
+            
+            toCell.HexStack.PositionHexes(hexesToTransfer, targetCount);
+            
+            await CheckAndDestroy(toCell);
+            toCell.TryClear();
             
             if (fromCell.IsOccupied)
                 await TryTransferFromCell(fromCell);
             
             await TryTransferFromCell(toCell);
-        }
-        
-        private void UpdateCellState(Cell cell)
-        {
-            cell.UpdateStackColors();
-            cell.TryClear();
-        }
-        
-        private async UniTask UpdateAndCheckCell(Cell cell)
-        {
-            cell.UpdateStackColors();
-            await CheckAndDestroy(cell);
-            cell.TryClear();
         }
 
         private async UniTask ProcessCellWithNeighbors(Cell cell)

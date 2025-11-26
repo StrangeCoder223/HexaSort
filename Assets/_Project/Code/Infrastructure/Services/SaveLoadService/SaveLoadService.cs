@@ -24,7 +24,7 @@ namespace _Project.Code.Infrastructure.Services.SaveLoadService
             PlayerPrefs.SetString(PersistentKey, json);
         }
 
-        public Data.PersistentData Load()
+        public PersistentData Load()
         {
             string json = PlayerPrefs.GetString(PersistentKey);
 

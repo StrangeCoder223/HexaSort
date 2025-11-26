@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using Reflex.Injectors;
 using Reflex.Logging;
 using UnityEngine;
@@ -15,10 +16,10 @@ namespace Reflex.Core
         
         [SerializeField] private SceneEntry _entryPoint;
         
-        private void Awake()
+        private async void Awake()
         {
             UnityInjector.OnSceneLoaded.Invoke(gameObject.scene, this);
-            _entryPoint.Initialize();
+            await _entryPoint.Initialize();
         }
 
         public void InstallBindings(ContainerBuilder containerBuilder)
@@ -37,6 +38,6 @@ namespace Reflex.Core
     
     public abstract class SceneEntry : MonoBehaviour
     {
-        public abstract void Initialize();
+        public abstract UniTask Initialize();
     }
 }

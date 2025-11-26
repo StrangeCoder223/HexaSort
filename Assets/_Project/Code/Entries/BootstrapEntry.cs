@@ -3,6 +3,7 @@ using _Project.Code.Infrastructure.Services.ConfigService;
 using _Project.Code.Infrastructure.Services.PersistentService;
 using _Project.Code.Infrastructure.Services.SaveLoadService;
 using _Project.Code.Infrastructure.Services.SceneLoader;
+using Cysharp.Threading.Tasks;
 using Reflex.Attributes;
 using Reflex.Core;
 
@@ -25,7 +26,7 @@ namespace _Project.Code
             _sceneLoader = sceneLoader;
         }
 
-        public override async void Initialize()
+        public override async UniTask Initialize()
         {
             BootServices();
 

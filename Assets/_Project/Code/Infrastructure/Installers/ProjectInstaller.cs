@@ -1,4 +1,3 @@
-using _Project.Code.Infrastructure.Configs;
 using _Project.Code.Infrastructure.Factories;
 using _Project.Code.Infrastructure.Services.AssetProvider;
 using _Project.Code.Infrastructure.Services.ConfigService;
@@ -32,7 +31,7 @@ namespace _Project.Code.Infrastructure.Installers
             _sceneLoader = CreateSceneLoader();
 
             _uiFactory = new UIFactory(_assetProvider, _configService);
-            _gameFactory = new GameFactory(_assetProvider, _configService);
+            _gameFactory = new GameFactory(_assetProvider, _configService, _persistentService);
             
             builder.AddSingleton(_configService, typeof(IConfigService));
             builder.AddSingleton(_persistentService, typeof(IPersistentService));

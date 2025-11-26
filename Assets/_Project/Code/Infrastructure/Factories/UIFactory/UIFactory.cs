@@ -3,7 +3,6 @@ using _Project.Code.Infrastructure.Services.AssetProvider;
 using _Project.Code.Infrastructure.Services.ConfigService;
 using _Project.Code.UI;
 using Cysharp.Threading.Tasks;
-using Reflex.Injectors;
 using UnityEngine;
 
 namespace _Project.Code.Infrastructure.Factories
@@ -16,6 +15,8 @@ namespace _Project.Code.Infrastructure.Factories
         {
             _configService = configService;
         }
+        
+        public void Clear() { }
 
         public async UniTask<GoalWidget> CreateGoalWidget(GoalData goalData, RectTransform parent = null)
         {

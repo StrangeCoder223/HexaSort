@@ -1,4 +1,5 @@
 using _Project.Code.Gameplay;
+using _Project.Code.Gameplay.Generators;
 using Reflex.Core;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace _Project.Code.Infrastructure.Installers
         
         public void InstallBindings(ContainerBuilder containerBuilder)
         {
+            containerBuilder.AddSingleton(typeof(LevelSwitcher));
             containerBuilder.AddSingleton(typeof(LevelGenerator));
             containerBuilder.AddSingleton(typeof(StackOfferGenerator));
             containerBuilder.AddSingleton(_stackOfferSpawner, typeof(StackOfferSpawner));

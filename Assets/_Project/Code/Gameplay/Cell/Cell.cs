@@ -1,27 +1,28 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using _Project.Code.Infrastructure.Configs;
 using _Project.Code.Infrastructure.Data;
 using UnityEngine;
 
 namespace _Project.Code.Gameplay
 {
-    public class Cell : MonoBehaviour
+    public class Cell : MonoBehaviour, IProgressWriter
     {
         public event Action<Cell> Occupied;
         
         public bool IsOccupied => _hexStack != null;
         public HexStack HexStack => _hexStack;
-        public int X => _cellData.X;
-        public int Y => _cellData.Y;
+        public Vector2Int Position { get; private set; }
         
         [SerializeField] private MeshRenderer _cellRenderer;
         
         private HexStack _hexStack;
         private float _stackOffset = 0.125f;
-        private CellData _cellData;
             
-        public void Construct(CellData cellData)
+        public void Construct(Vector2Int position)
         {
-            _cellData = cellData;
+            Position = position;
         }
         
         public void Occupy(HexStack hexStack)
@@ -32,7 +33,6 @@ namespace _Project.Code.Gameplay
             _hexStack = hexStack;
             _hexStack.transform.SetParent(transform);
             _hexStack.transform.localPosition = Vector3.up * _stackOffset;
-            _cellData.StackColors = _hexStack.GetColors();
             
             Occupied?.Invoke(this);
         }
@@ -45,14 +45,6 @@ namespace _Project.Code.Gameplay
                 _cellRenderer.material.DisableKeyword("_EMISSION");
         }
 
-        public void UpdateStackColors()
-        {
-            if (_hexStack != null)
-            {
-                _cellData.StackColors = _hexStack.GetColors();
-            }
-        }
-
         public void TryClear()
         {
             if (_hexStack == null)
@@ -62,8 +54,13 @@ namespace _Project.Code.Gameplay
             {
                 Destroy(_hexStack.gameObject);
                 _hexStack = null;
-                _cellData.StackColors.Clear();
             }
+        }
+
+        public void WriteProgress(PlayerProgress progress)
+        {
+            CellData cellData = progress.LevelData.Cells.FirstOrDefault(x => x.Position == Position);
+            cellData.StackColors = _hexStack != null ? _hexStack.GetColors() : new List<HexColor>();
         }
     }
 }

@@ -45,7 +45,7 @@ namespace _Project.Code.Gameplay
                 return toCount > fromCount;
 
             // При равном количестве выбираем по координатам (приоритет слева сверху)
-            return to.X < from.X || (to.X == from.X && to.Y < from.Y);
+            return to.Position.x < from.Position.x || (to.Position.x == from.Position.x && to.Position.y < from.Position.y);
         }
     }
 }

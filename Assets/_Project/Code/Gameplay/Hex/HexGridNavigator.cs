@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace _Project.Code.Gameplay
 {
@@ -16,18 +15,18 @@ namespace _Project.Code.Gameplay
             
             foreach (Cell cell in cells)
             {
-                _cellsCache[(cell.X, cell.Y)] = cell;
+                _cellsCache[(cell.Position.x, cell.Position.y)] = cell;
             }
         }
 
         public List<Cell> GetNeighborCells(Cell cell)
         {
             List<Cell> neighbors = new List<Cell>();
-            (int, int)[] offsets = GetOffsetsForColumn(cell.X);
+            (int, int)[] offsets = GetOffsetsForColumn(cell.Position.x);
 
             foreach ((int dx, int dy) in offsets)
             {
-                if (_cellsCache.TryGetValue((cell.X + dx, cell.Y + dy), out Cell neighbor))
+                if (_cellsCache.TryGetValue((cell.Position.x + dx, cell.Position.y + dy), out Cell neighbor))
                 {
                     neighbors.Add(neighbor);
                 }

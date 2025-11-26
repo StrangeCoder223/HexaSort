@@ -34,9 +34,7 @@ namespace _Project.Code.Gameplay
 
         public void Fill(List<Hex> newHexes)
         {
-            int startIndex = _hexes.Count;
             _hexes.AddRange(newHexes);
-            PositionHexes(newHexes, startIndex);
         }
         
         public List<Hex> RemoveUpper()
@@ -51,7 +49,7 @@ namespace _Project.Code.Gameplay
             return removedHexes;
         }
         
-        private void PositionHexes(List<Hex> hexes, int startIndex)
+        public void PositionHexes(List<Hex> hexes, int startIndex)
         {
             for (int i = 0; i < hexes.Count; i++)
             {
