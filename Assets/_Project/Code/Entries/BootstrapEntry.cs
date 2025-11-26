@@ -1,3 +1,4 @@
+using System;
 using _Project.Code.Infrastructure.Data;
 using _Project.Code.Infrastructure.Services.ConfigService;
 using _Project.Code.Infrastructure.Services.PersistentService;
@@ -28,6 +29,8 @@ namespace _Project.Code
 
         public override async UniTask Initialize()
         {
+            DontDestroyOnLoad(gameObject);
+            
             BootServices();
 
             await _sceneLoader.LoadScene(RuntimeConstants.Scenes.Game);
@@ -43,6 +46,11 @@ namespace _Project.Code
                 _persistentService.Data = _persistentService.CreateDefaultData();
             else
                 _persistentService.Data = savedData;
+        }
+
+        private void OnApplicationQuit()
+        {
+            _saveLoadService.Save();
         }
     }
 }
